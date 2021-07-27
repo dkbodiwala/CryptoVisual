@@ -1,0 +1,11 @@
+<div class="row justify-content-md-center" style="margin: 2%;">
+    <div class="col-sm-5" style="margin: 1% 0% 0% 1%;" *ngFor="let algo of allAlgorithms">
+        <div class="card">
+            <img class="card-img-top" src={{algo.image}} alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">{{algo.name}}</h5>
+                <a class="btn btn-primary" (click)="goToDetail(algo)">Test Algorithm</a>
+            </div>
+        </div>
+    </div>
+</div>

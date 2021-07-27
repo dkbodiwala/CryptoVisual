@@ -1,0 +1,92 @@
+<div class="row justify-content-center">
+    <div class="col-sm-8">
+        <app-title-header image={{image}} title={{title}} description={{description}}></app-title-header>
+
+        <div class="card" style="margin: 2% 5% 2% 5%;">
+            <div class="card-body">
+                <h5 class="card-title">Encrypt using {{title}}</h5>
+                <form #form="ngForm">
+                    <div class="form-group">
+                        <label for="plainText">Enter Text</label>
+                        <input (change)="encrypt()" type="text" minlength="1" class="form-control" [(ngModel)]="plainText" name="plainText" id="plainText" placeholder="Text to be encrypted" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="encryptionKey">Enter Key</label>
+
+                        <!-- Caesar Cipher Key Dropdown -->
+                        <div *ngIf="id == 1">
+                            <select (change)="encrypt()" class="form-control" [(ngModel)]="encryptionKey" name="encryptionKey" id="encryptionKey">
+                                <option *ngFor="let i of caesarCipherAllKeys" [ngValue]="i">{{i}}</option>
+                            </select>
+                        </div>
+
+                        <!-- All other algorithms key -->
+                        <div *ngIf="id != 1">
+                            <input (change)="encrypt()" type="text" minlength="1" class="form-control" [(ngModel)]="encryptionKey" name="encryptionKey" id="encryptionKey" placeholder="Key to encrypt" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card theEnd" style="margin: 2% 5% 2% 5%;" *ngIf="showEncryptedText">
+            <div class="card-body">
+
+                <!-- Caesar Cipher Steps -->
+                <div *ngIf="encryptedValue.steps && id == 1">
+                    <h4 class="card-title">Visualization</h4>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Plain Text</th>
+                                    <td *ngFor="let i of encryptedValue.steps[0]">{{i}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Encrypted Text</th>
+                                    <td *ngFor="let i of encryptedValue.steps[1]">{{i}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br/>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Character</th>
+                                    <td *ngFor="let i of encryptedValue.steps[2]">{{i}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Encrypted Character</th>
+                                    <td *ngFor="let i of encryptedValue.steps[3]">{{i}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Rail Fence Cipher and RC4 Steps -->
+                <div *ngIf="encryptedValue.steps && (id == 2 || id == 4)">
+                    <h5 class="card-title">Visualization</h5>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr *ngFor="let row of encryptedValue.steps; let i = index">
+                                    <td *ngFor="let i of row">{{i}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- All Cipher Output -->
+                <br/>
+                <h4 class="card-title">Output</h4>
+                <p class="card-text">Plain Text : <b>{{plainText}}</b></p>
+                <p class="card-text">Cipher Text : <b>{{encryptedValue.cipherText}}</b></p>
+            </div>
+        </div>
+    </div>
+</div>

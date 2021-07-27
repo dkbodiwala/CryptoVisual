@@ -1,0 +1,11 @@
+.image_style {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    height: 50%;
+}
+
+p {
+    text-align: justify;
+}
